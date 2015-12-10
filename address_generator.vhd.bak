@@ -1,0 +1,32 @@
+LIBRARY ieee;
+USE ieee.std_logic_1164.all;
+USE ieee.numeric_std.all;
+
+ENTITY address_generator IS
+	PORT(      
+		load        : IN   STD_LOGIC;
+		h_sync      : IN   STD_LOGIC;
+		v_sync      : IN   STD_LOGIC;
+		address     :  BUFFER   STD_LOGIC_VECTOR(16 DOWNTO 0):=(OTHERS => '0'));      --ROM address
+END hw_image_generator;
+
+ARCHITECTURE behavior OF address_generator IS
+BEGIN
+	
+	PROCESS(h_sync, v_sync)
+	BEGIN
+
+			IF(load = '1')THEN
+				--IF((column>= 0) AND (column<=399) AND (row>=0) AND (row<=223))THEN
+					address <= std_logic_vector(to_unsigned(to_integer(unsigned( address )) + 1, 17));
+				--ELSIF(column=1279 AND row=1023)THEN
+				--	address <= (OTHERS => '0');
+				--ELSE
+				--	red <= (OTHERS => '0');
+				--	green <= (OTHERS => '0');
+				--	blue <= (OTHERS => '0');
+				--END IF;
+			END IF;
+	
+	END PROCESS;
+END behavior;
